@@ -5,17 +5,17 @@ This project is a fullstack application for personal expense management, develop
 ## Technologies Used
 
 ### Frontend
-- ReactJS
-- React Router
-- Framer
-- Lottie
-- Tailwind CSS
-- React Chart JS 2
-- React Query
+- ReactJS: JavaScript library for building user interfaces.
+- React Router: Library for handling routes in the application.
+- Framer: Library for animations.
+- Lottie: Library for JSON animations.
+- Tailwind CSS: CSS framework for styling.
+- React Chart JS 2: Library for visualizing data in charts.
+- React Query: Library for fetching and caching data.
 
 ### Backend
-- Laravel
-- MySQL
+- Laravel: PHP framework for web applications.
+- MySQL: Relational database management system.
 
 ## Project Features
 

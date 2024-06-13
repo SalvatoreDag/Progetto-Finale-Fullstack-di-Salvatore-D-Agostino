@@ -83,45 +83,39 @@ This project is a fullstack application for personal expense management, develop
     composer install
     ```
 
-3. **Install Laravel Sanctum:**
-
-    ```bash
-    composer require laravel/sanctum
-    ```
-
-4. **Publish Sanctum configuration:**
+3. **Publish Sanctum configuration:**
 
     ```bash
     php artisan vendor:publish --provider="Laravel\\Sanctum\\SanctumServiceProvider"
     ```
 
-5. **Run the Sanctum migrations:**
+4. **Run the Sanctum migrations:**
 
     ```bash
     php artisan migrate
     ```
 
-6. **Configure the environment variables:**
+5. **Configure the environment variables:**
 
     ```bash
     cp .env.example .env
     ```
 
-7. **Edit the `.env` file with your MySQL database credentials.**
+6. **Edit the `.env` file with your MySQL database credentials.**
 
-8. **Generate the Laravel application key:**
+7. **Generate the Laravel application key:**
 
     ```bash
     php artisan key:generate
     ```
 
-9. **Run the migrations to create the database tables:**
+8. **Run the migrations to create the database tables:**
 
     ```bash
     php artisan migrate
     ```
 
-10. **Start the Laravel server:**
+9. **Start the Laravel server:**
 
     ```bash
     php artisan serve
@@ -136,6 +130,4 @@ This project is a fullstack application for personal expense management, develop
 
 If you wish to contribute to the project, please open a pull request or report an issue in the Issues section of the repository.
 
-## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.

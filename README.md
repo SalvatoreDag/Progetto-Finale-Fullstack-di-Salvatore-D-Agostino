@@ -16,6 +16,7 @@ This project is a fullstack application for personal expense management, develop
 ### Backend
 - Laravel: PHP framework for web applications.
 - MySQL: Relational database management system.
+- Laravel Sanctum: Simple authentication system for SPAs, mobile applications, and simple, token-based APIs.
 
 ## Project Features
 
@@ -82,27 +83,45 @@ This project is a fullstack application for personal expense management, develop
     composer install
     ```
 
-3. **Configure the environment variables:**
+3. **Install Laravel Sanctum:**
 
     ```bash
-    cp .env.example .env
+    composer require laravel/sanctum
     ```
 
-4. **Edit the `.env` file with your MySQL database credentials.**
-
-5. **Generate the Laravel application key:**
+4. **Publish Sanctum configuration:**
 
     ```bash
-    php artisan key:generate
+    php artisan vendor:publish --provider="Laravel\\Sanctum\\SanctumServiceProvider"
     ```
 
-6. **Run the migrations to create the database tables:**
+5. **Run the Sanctum migrations:**
 
     ```bash
     php artisan migrate
     ```
 
-7. **Start the Laravel server:**
+6. **Configure the environment variables:**
+
+    ```bash
+    cp .env.example .env
+    ```
+
+7. **Edit the `.env` file with your MySQL database credentials.**
+
+8. **Generate the Laravel application key:**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+9. **Run the migrations to create the database tables:**
+
+    ```bash
+    php artisan migrate
+    ```
+
+10. **Start the Laravel server:**
 
     ```bash
     php artisan serve

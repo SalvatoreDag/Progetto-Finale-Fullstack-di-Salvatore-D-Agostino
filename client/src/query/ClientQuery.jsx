@@ -26,7 +26,6 @@ export const ClientQuery = () => {
     try {
       const response = await registerMutation.mutateAsync(userData);
     } catch (error) {
-      // console.error("error");
     }
   };
 
@@ -55,7 +54,6 @@ export const ClientQuery = () => {
     try {
       const response = await loginMutation.mutateAsync(userData);
     } catch (error) {
-      // console.error("errore durante il login");
     }
   };
 
@@ -63,7 +61,6 @@ export const ClientQuery = () => {
     onSuccess: (response) => {
       
       queryClient.setQueryData(["message"], response.data.message);
-      // queryClient.setQueryData(["isLoggedIn"], false);
       queryClient.clear()
       sessionStorage.removeItem("accessToken");
       localStorage.removeItem("token");
@@ -76,7 +73,6 @@ export const ClientQuery = () => {
   const logoutUser = async (accessToken) => {
     try {
       const response = await logoutMutation.mutateAsync(accessToken);
-      console.log(response)
 
     } catch (error) {
       console.error("errore durante il logout");
@@ -97,7 +93,6 @@ export const ClientQuery = () => {
     try {
       const response = await updateUserExpensesMutation.mutateAsync(data);
     } catch (error) {
-      // console.error("error");
     }
   };
 
@@ -122,7 +117,6 @@ export const ClientQuery = () => {
 
   const storeUserExpensesMutation = useMutation(storeExpenses, {
     onSuccess: (response) => {
-      console.log(response.data.message);
       queryClient.setQueryData(["message"], response.data.message);
 
       queryClient.invalidateQueries(["expensesByMonth"]);

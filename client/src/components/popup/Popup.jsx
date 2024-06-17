@@ -9,17 +9,17 @@ const Popup = ({ message }) => {
   useEffect(() => {
     if (message) {
       setIsActive(true);
-      // Nascondi il popup dopo 3 secondi
+      // Hide popup after 3 seconds
       timerRef.current = setTimeout(() => {
         setIsActive(false);
         queryClient.setQueryData(['message'], null);
       }, 3000);
     } else {
-      // Se il messaggio è vuoto, assicuriamoci che il popup sia nascosto
+      // If the message is empty, make sure the popup is hidden
       setIsActive(false);
     }
 
-    // Ripulisci il timer quando il componente viene smontato o quando il messaggio cambia
+    // Clear the timer when the component is disassembled or when the message changes
     return () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);

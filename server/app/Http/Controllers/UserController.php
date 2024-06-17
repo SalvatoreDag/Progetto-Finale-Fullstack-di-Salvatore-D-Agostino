@@ -35,7 +35,6 @@ class UserController extends Controller
         ];
 
         return response()->json(['message' => 'User created'], 200);
-        // return response($response, 201);
     }
 
     public function getUserByToken(Request $request)

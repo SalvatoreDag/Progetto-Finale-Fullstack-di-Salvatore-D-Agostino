@@ -21,7 +21,6 @@ function Signup() {
   const { data: isSuccess } = useQuery(["isSuccess"], null);
 
   if (isSuccess) {
-    console.log(isSuccess);
     navigate("/auth/signin");
     queryClient.removeQueries(["isSuccess"]);
   }

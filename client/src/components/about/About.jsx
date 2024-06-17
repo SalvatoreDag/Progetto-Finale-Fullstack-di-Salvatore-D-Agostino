@@ -10,29 +10,6 @@ import tech from "../../img/techcrunch.png";
 function About() {
   return (
     <section className="py-5">
-      {/* <div className="mb-10 lg:mb-20">
-        <h3 className="mt-5 text-center font-semibold md:text-xl">
-          As fetured in
-        </h3>
-        <div className="flex justify-around rounded-full bg-indigo-100 p-10 mt-5 lg:px-5">
-          <img
-            src={forbes}
-            className="grayscale w-24 h-6 md:w-36 md:h-10 lg:w-48 lg:h-14"
-          />
-          <img
-            src={times}
-            className="grayscale w-28 h-6 md:w-36 md:h-10 lg:w-48 lg:h-14"
-          />
-          <img
-            src={usa}
-            className="grayscale w-24 h-6 md:w-36 md:h-10 lg:w-48 lg:h-14"
-          />
-          <img
-            src={tech}
-            className="grayscale w-24 h-6 md:w-36 md:h-10 lg:w-48 lg:h-14"
-          />
-        </div>
-      </div> */}
       <h2 className="text-center font-extrabold md:text-2xl lg:text-4xl lg:mb-20">
         Why Tracking Your Finances Matters
       </h2>

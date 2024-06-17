@@ -22,17 +22,4 @@ function Home() {
     </>
   );
 }
-{/* <div className="lg:-ml-36"> */}
-{/* <motion.div
-  animate={{ opacity: 1 }}
-  initial={{ opacity: 0 }}
-  exit={{ opacity: 0 }}
-  transition={{ duration: 1 }}
-> */}
-//   <Hero />
-// {/* </motion.div> */}
-// <About />
-// <WhySection />
-// <Footer />
-// </div>
 export default Home;

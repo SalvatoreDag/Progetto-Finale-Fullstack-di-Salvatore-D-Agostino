@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/logout', [UserController::class, 'logout']);
 
-    //api per le spese
+    //api for expenses
     Route::post('/expenses', [ExpensesController::class, 'store']);
     Route::delete('expenses/{id}', [ExpensesController::class, 'destroy']);
     Route::put('expenses/{id}', [ExpensesController::class, 'update']);

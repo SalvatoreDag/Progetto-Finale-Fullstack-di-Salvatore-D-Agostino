@@ -69,7 +69,6 @@ function Signin() {
           </NavLink>
         </div>
         <div className="w-full px-10 py-8 mt-6 overflow-hidden lg:shadow-md sm:max-w-md rounded-xl">
-          {/* <div className="w-full max-w-sm mx-auto bg-white rounded-xl shadow-md p-6"> */}
           <form onSubmit={handleSubmit} action="api/login" method="POST">
             <div className="mt-4">
               <label
@@ -118,7 +117,6 @@ function Signin() {
                 <input
                   type="checkbox"
                   id="rememberMeCheckbox"
-                  // checked={rememberMe}
                   onChange={rememberToggle}
                 />
                 <label htmlFor="rememberMeCheckbox">Remember me</label>
@@ -133,7 +131,6 @@ function Signin() {
           </form>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }

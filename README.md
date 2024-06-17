@@ -89,33 +89,27 @@ This project is a fullstack application for personal expense management, develop
     php artisan vendor:publish --provider="Laravel\\Sanctum\\SanctumServiceProvider"
     ```
 
-4. **Run the Sanctum migrations:**
-
-    ```bash
-    php artisan migrate
-    ```
-
-5. **Configure the environment variables:**
+4. **Configure the environment variables:**
 
     ```bash
     cp .env.example .env
     ```
 
-6. **Edit the `.env` file with your MySQL database credentials.**
+5. **Edit the `.env` file with your MySQL database credentials.**
 
-7. **Generate the Laravel application key:**
+6. **Generate the Laravel application key:**
 
     ```bash
     php artisan key:generate
     ```
 
-8. **Run the migrations to create the database tables:**
+7. **Run the migrations to create the database tables:**
 
     ```bash
     php artisan migrate
     ```
 
-9. **Start the Laravel server:**
+8. **Start the Laravel server:**
 
     ```bash
     php artisan serve

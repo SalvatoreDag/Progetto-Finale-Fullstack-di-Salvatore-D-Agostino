@@ -47,7 +47,7 @@ class UserController extends Controller
             return response()->json($user);
         } else {
             // Invalid token or user not found
-            return response()->json(['error' => 'Utente non trovato'], 404);
+            return response()->json(['error' => 'User not found'], 404);
         }
     }
 

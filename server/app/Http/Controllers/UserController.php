@@ -38,13 +38,11 @@ class UserController extends Controller
         $token = $request->input('token');
         $user = User::where('api_token', $token)->first();
 
-        if ($user) {
-            // User found
-            return response()->json($user);
-        } else {
-            // Invalid token or user not found
+        if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
+
+        return response()->json($user);
     }
 
     public function logout(Request $request)
@@ -67,26 +65,26 @@ class UserController extends Controller
         // I extract the user with the entered email
         $user = User::where('email', $fields['email'])->first();
 
-        // I check if the user exists and then if the password entered and the one in the database match
-        if ($user && Hash::check($fields['password'], $user->password)) {
-            // I check if the user wants to be remembered and set the token expiration accordingly
-            $remember = $request->input('remember', false); // If not provided, it defaults to false
-            $token = $user->createToken('myapptoken', ['remember' => $remember])->plainTextToken;
-            Auth::login($user, $remember);
-
-            // I add the value of "remember" to the response array
-            $response = [
-                'user' => $user,
-                'token' => $token,
-                'message' => 'logged in',
-                'remember' => $remember,
-            ];
-
-            return response($response);
-        } else {
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'Wrong credentials'
             ], 401);
         }
+        
+        // I check if the user wants to be remembered and set the token expiration accordingly
+        $remember = $request->input('remember', false); // If not provided, it defaults to false
+        $token = $user->createToken('myapptoken', ['remember' => $remember])->plainTextToken;
+        Auth::login($user, $remember);
+        
+        // I add the value of "remember" to the response array
+        $response = [
+            'user' => $user,
+            'token' => $token,
+            'message' => 'logged in',
+            'remember' => $remember,
+        ];
+        
+        return response($response);
+        
     }
 }

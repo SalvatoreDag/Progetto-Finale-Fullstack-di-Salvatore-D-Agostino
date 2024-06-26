@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpensesController extends Controller
 {
-    //method to return data based on user_id
-    public function idValue()
-    {
-        $userId = Auth::id();
-
-        return Expenses::where('user_id', $userId);
-    }
-
     //all get requests
     public function index(Request $request)
     {
@@ -25,25 +17,31 @@ class ExpensesController extends Controller
             return $this->filterByMonth($request);
         }
 
-        $expenses = Expenses::where('user_id', $userId)->get();
+        $expenses = Expenses::ofUser($userId)->get();
 
-        return $expenses;
+        return response()->json($expenses);
     }
 
     public function show($id)
     {
-        $expenses = $this->idValue()->find($id);
+        $expense = Expenses::ofUser(Auth::id())->find($id);
 
-        return $expenses;
+        if (!$expense) {
+            return response()->json(['error' => 'Expense not found'], 404);
+        }
+
+        return response()->json($expense);
     }
 
     public function filterByMonth(Request $request)
     {
-        // return $expenses;
         $month = $request->input('filter.month');
 
         // Filter expenses for the specified month
-        $expenses = $this->idValue()->whereRaw('MONTHNAME(date) = ?', [$month])->orderBy('date', 'asc')->get();
+        $expenses = Expenses::ofUser(Auth::id())
+            ->whereRaw('MONTHNAME(date) = ?', [$month])
+            ->orderBy('date', 'asc')
+            ->get();
 
         // Calculate the sum of the expense amounts
         $total = $expenses->sum('amount');
@@ -78,10 +76,12 @@ class ExpensesController extends Controller
     //put request
     public function update(Request $request, $id)
     {
-        $expense = $this->idValue()->find($id);
+        $expense = Expenses::ofUser(Auth::id())->find($id);
+
         if (!$expense) {
             return response()->json(['error' => 'Expense not found'], 404);
         }
+
         $data = $request->only(['title', 'amount', 'description', 'date']);
 
         $expense->update($data);
@@ -94,7 +94,7 @@ class ExpensesController extends Controller
     {
         try {
             // Search for spending by ID and try to eliminate it
-            $expense = $this->idValue()->findOrFail($id);
+            $expense = Expenses::ofUser(Auth::id())->findOrFail($id);
             $expense->delete();
 
             return response()->json(['message' => 'Expense deleted successfully'], 200);

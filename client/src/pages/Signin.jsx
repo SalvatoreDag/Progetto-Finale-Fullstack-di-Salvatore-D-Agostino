@@ -1,18 +1,27 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { ClientQuery } from "../query/ClientQuery";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import Loading from "../components/loading/Loading";
 
 //login management component
 function Signin() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
+  const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search);
+  // const preFilledEmail = queryParams.get('email') || '';
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  console.log(isSubmitting);
 
   const { loginUser } = ClientQuery();
   const queryClient = useQueryClient();
@@ -28,9 +37,9 @@ function Signin() {
     setRemember(true);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     //login function
-    loginUser({ ...data, remember });
+    await loginUser({ ...data, remember });
   };
 
   const handleToggle = (e) => {
@@ -41,6 +50,7 @@ function Signin() {
   return (
     <>
       <div className="flex flex-col items-center min-h-screen pt-6 justify-start md:justify-center sm:pt-0  lg:-mt-20">
+        {isSubmitting ? <Loading /> : (null)}
         <div>
           <NavLink to="/">
             <h3 className="text-4xl text-center font-bold text-indigo-800">
@@ -74,6 +84,7 @@ function Signin() {
                 name="email"
                 className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 {...register("email")}
+                disabled={isSubmitting}
               />
             </div>
             <div className="mt-4">
@@ -90,6 +101,7 @@ function Signin() {
                   name="password"
                   className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   {...register("password")}
+                  disabled={isSubmitting}
                 />
                 <button
                   className="absolute right-0 top-1/2  -translate-y-1/2 h-8 w-8 text-gray-600 "
@@ -109,12 +121,14 @@ function Signin() {
                   type="checkbox"
                   id="rememberMeCheckbox"
                   onChange={rememberToggle}
+                  disabled={isSubmitting}
                 />
                 <label htmlFor="rememberMeCheckbox">Remember me</label>
               </div>
               <button
                 type="submit"
                 className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase bg-indigo-500 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700"
+                disabled={isSubmitting}
               >
                 Login
               </button>

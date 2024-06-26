@@ -1,20 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ClientQuery } from "../query/ClientQuery";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 
 //registration management component
 function Signup() {
+  const { register, handleSubmit } = useForm();
   const { registerUser } = ClientQuery();
   const queryClient = useQueryClient();
 
-  const nameRef = useRef("");
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
-  const confirmPasswordRef = useRef("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
@@ -25,27 +23,9 @@ function Signup() {
     queryClient.removeQueries(["isSuccess"]);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const name = nameRef.current.value;
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const password_confirmation = confirmPasswordRef.current.value;
-
-    const userData = {
-      name,
-      email,
-      password,
-      password_confirmation,
-    };
-
+  const onSubmit = (data) => {
     //register function
-    registerUser(userData);
-
-    nameRef.current.value = "";
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-    confirmPasswordRef.current.value = "";
+    registerUser(data);
   };
 
   const handleTogglePassword = (e) => {
@@ -67,7 +47,7 @@ function Signup() {
           </NavLink>
         </div>
         <div className="w-full px-10 py-8 mt-6 overflow-hidden lg:shadow-md sm:max-w-md rounded-xl">
-          <form onSubmit={handleSubmit} method="POST">
+          <form onSubmit={handleSubmit(onSubmit)} method="POST">
             <div className="mt-4">
               <label
                 htmlFor="name"
@@ -80,7 +60,7 @@ function Signup() {
                 type="text"
                 name="name"
                 className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                ref={nameRef}
+                {...register("name")}
               />
             </div>
             <div className="mt-4">
@@ -95,7 +75,7 @@ function Signup() {
                 type="email"
                 name="email"
                 className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                ref={emailRef}
+                {...register("email")}
               />
             </div>
             <div className="mt-4">
@@ -111,7 +91,7 @@ function Signup() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  ref={passwordRef}
+                  {...register("password")}
                 />
                 <button
                   className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-8 text-gray-600"
@@ -138,7 +118,7 @@ function Signup() {
                   type={showConfirmPassword ? "text" : "password"}
                   name="password_confirmation"
                   className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  ref={confirmPasswordRef}
+                  {...register("password_confirmation")}
                 />
                 <button
                   className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-8 text-gray-600"

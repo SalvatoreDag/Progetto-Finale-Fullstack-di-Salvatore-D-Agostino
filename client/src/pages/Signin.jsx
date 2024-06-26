@@ -1,18 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { ClientQuery } from "../query/ClientQuery";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 
 //login management component
 function Signin() {
+  const { register, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+
   const { loginUser } = ClientQuery();
   const queryClient = useQueryClient();
   const { data: isSuccess } = useQuery(["isSuccess"], null);
@@ -27,23 +28,9 @@ function Signin() {
     setRemember(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-
-    const userData = {
-      email,
-      password,
-      remember,
-    };
-
+  const onSubmit = (data) => {
     //login function
-    loginUser(userData);
-
-    //reset values
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
+    loginUser({ ...data, remember });
   };
 
   const handleToggle = (e) => {
@@ -69,7 +56,11 @@ function Signin() {
           </NavLink>
         </div>
         <div className="w-full px-10 py-8 mt-6 overflow-hidden lg:shadow-md sm:max-w-md rounded-xl">
-          <form onSubmit={handleSubmit} action="api/login" method="POST">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            action="api/login"
+            method="POST"
+          >
             <div className="mt-4">
               <label
                 htmlFor="email"
@@ -82,7 +73,7 @@ function Signin() {
                 type="email"
                 name="email"
                 className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                ref={emailRef}
+                {...register("email")}
               />
             </div>
             <div className="mt-4">
@@ -98,7 +89,7 @@ function Signin() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                  ref={passwordRef}
+                  {...register("password")}
                 />
                 <button
                   className="absolute right-0 top-1/2  -translate-y-1/2 h-8 w-8 text-gray-600 "

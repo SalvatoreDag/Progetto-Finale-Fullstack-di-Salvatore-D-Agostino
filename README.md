@@ -36,7 +36,6 @@ This project is a fullstack application for personal expense management, develop
 - MySQL
 
 ### Installation Instructions
-
 1. **Clone the repository:**
 
     ```bash
@@ -63,7 +62,19 @@ This project is a fullstack application for personal expense management, develop
     npm install
     ```
 
-3. **Start the frontend application:**
+3. **Create and configure the environment variables file:**
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4. **Edit the `.env` file to set the API base URL:**
+
+    ```env
+    REACT_APP_API_BASE_URL=http://127.0.0.1:8000/api
+    ```
+
+5. **Start the frontend application:**
 
     ```bash
     npm start

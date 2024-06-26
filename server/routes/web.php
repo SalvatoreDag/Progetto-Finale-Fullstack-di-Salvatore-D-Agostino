@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ListingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +12,6 @@ use App\Http\Controllers\ListingsController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
- Route::get('/', function () {
-    return response("<h1>test</h1>");
- });
+Route::get('/', function () {
+    return response('<h1>test</h1>');
+});

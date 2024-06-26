@@ -12,8 +12,10 @@ class ExpensesController extends Controller
     public function idValue()
     {
         $userId = Auth::id();
+
         return Expenses::where('user_id', $userId);
     }
+
     //all get requests
     public function index(Request $request)
     {
@@ -31,6 +33,7 @@ class ExpensesController extends Controller
     public function show($id)
     {
         $expenses = $this->idValue()->find($id);
+
         return $expenses;
     }
 
@@ -40,7 +43,7 @@ class ExpensesController extends Controller
         $month = $request->input('filter.month');
 
         // Filter expenses for the specified month
-        $expenses = $this->idValue()->whereRaw("MONTHNAME(date) = ?", [$month])->orderBy('date', 'asc')->get();
+        $expenses = $this->idValue()->whereRaw('MONTHNAME(date) = ?', [$month])->orderBy('date', 'asc')->get();
 
         // Calculate the sum of the expense amounts
         $total = $expenses->sum('amount');
@@ -59,14 +62,10 @@ class ExpensesController extends Controller
         return response()->json($result);
     }
 
-
-
     //post request
     public function store(Request $request)
     {
-
         $userId = Auth::id();
-
 
         $data = $request->only(['title', 'amount', 'description', 'date']);
         $data['user_id'] = $userId;
@@ -79,15 +78,14 @@ class ExpensesController extends Controller
     //put request
     public function update(Request $request, $id)
     {
-
         $expense = $this->idValue()->find($id);
         if (!$expense) {
             return response()->json(['error' => 'Expense not found'], 404);
         }
         $data = $request->only(['title', 'amount', 'description', 'date']);
 
-
         $expense->update($data);
+
         return response()->json(['message' => 'Expense updated successfully'], 200);
     }
 
@@ -98,7 +96,7 @@ class ExpensesController extends Controller
             // Search for spending by ID and try to eliminate it
             $expense = $this->idValue()->findOrFail($id);
             $expense->delete();
-    
+
             return response()->json(['message' => 'Expense deleted successfully'], 200);
         } catch (\Exception $e) {
             // If there is an error, return a response with the error message

@@ -5,16 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-
 
 class UserController extends Controller
 {
     public function register(Request $request)
     {
-
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
@@ -61,38 +57,36 @@ class UserController extends Controller
         ];
     }
 
-
     public function login(Request $request)
-{
-    $fields = $request->validate([
-        'email' => 'required|string',
-        'password' => 'required|string'
-    ]);
+    {
+        $fields = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
-    // I extract the user with the entered email
-    $user = User::where('email', $fields['email'])->first();
+        // I extract the user with the entered email
+        $user = User::where('email', $fields['email'])->first();
 
-    // I check if the user exists and then if the password entered and the one in the database match
-    if ($user && Hash::check($fields['password'], $user->password)) {
-        // I check if the user wants to be remembered and set the token expiration accordingly
-        $remember = $request->input('remember', false); // If not provided, it defaults to false
-        $token = $user->createToken('myapptoken', ['remember' => $remember])->plainTextToken;
-        Auth::login($user, $remember);
+        // I check if the user exists and then if the password entered and the one in the database match
+        if ($user && Hash::check($fields['password'], $user->password)) {
+            // I check if the user wants to be remembered and set the token expiration accordingly
+            $remember = $request->input('remember', false); // If not provided, it defaults to false
+            $token = $user->createToken('myapptoken', ['remember' => $remember])->plainTextToken;
+            Auth::login($user, $remember);
 
-        // I add the value of "remember" to the response array
-        $response = [
-            'user' => $user,
-            'token' => $token,
-            'message' => 'logged in',
-            'remember' => $remember,
-        ];
+            // I add the value of "remember" to the response array
+            $response = [
+                'user' => $user,
+                'token' => $token,
+                'message' => 'logged in',
+                'remember' => $remember,
+            ];
 
-        return response($response);
-    } else {
-        return response([
-            'message' => 'Wrong credentials'
-        ], 401);
+            return response($response);
+        } else {
+            return response([
+                'message' => 'Wrong credentials'
+            ], 401);
+        }
     }
-}
-
 }

@@ -6,7 +6,7 @@ import {
   destroyExpenses,
   updateExpenses,
   storeExpenses,
-} from "../utilis/api";
+} from "../apiClient/apiClient";
 
 //component for managing api
 export const ClientQuery = () => {

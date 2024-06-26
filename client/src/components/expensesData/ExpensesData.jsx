@@ -4,7 +4,7 @@ import ExpensesLayout from "../expensesLayout/ExpensesLayout";
 import ChartLayout from "../chartLayout/ChartLayout";
 import Loading from "../loading/Loading";
 import StoreExpenses from "../storeExpenses/StoreExpenses";
-import { expensesByMonth } from "../../utilis/api";
+import { expensesByMonth } from "../../apiClient/apiClient";
 import { ClientQuery } from "../../query/ClientQuery";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import MonthSelect from "../monthSelect/MonthSelect";

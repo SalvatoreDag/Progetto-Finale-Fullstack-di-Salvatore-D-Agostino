@@ -101,7 +101,7 @@ function ExpensesLayout({
                 </div>
                 <div className="flex flex-col-reverse justify-center">
                   <button
-                    className="font-bold c"
+                    className="font-bold hover:text-indigo-400"
                     onClick={() => onDelete(expense.id)}
                   >
                     <BiTrash />

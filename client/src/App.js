@@ -8,7 +8,7 @@ import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
 import { Navigate } from "react-router-dom";
 import Loading from "./components/loading/Loading";
-import { getUser } from "./utilis/api";
+import { getUser } from "./apiClient/apiClient";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Popup from "../src/components/popup/Popup";
 

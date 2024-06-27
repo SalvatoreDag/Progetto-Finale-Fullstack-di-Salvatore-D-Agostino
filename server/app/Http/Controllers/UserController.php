@@ -14,20 +14,20 @@ class UserController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])/|confirmed'
+            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])/|confirmed',
         ]);
 
         $user = User::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
-            'password' => bcrypt($fields['password'])
+            'password' => bcrypt($fields['password']),
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
 
         return response()->json(['message' => 'User created'], 200);
@@ -51,7 +51,7 @@ class UserController extends Controller
         auth()->user()->tokens()->delete();
 
         return [
-            'message' => 'Logged out'
+            'message' => 'Logged out',
         ];
     }
 
@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         $fields = $request->validate([
             'email' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
         ]);
 
         // I extract the user with the entered email
@@ -67,15 +67,15 @@ class UserController extends Controller
 
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Wrong credentials'
+                'message' => 'Wrong credentials',
             ], 401);
         }
-        
+
         // I check if the user wants to be remembered and set the token expiration accordingly
         $remember = $request->input('remember', false); // If not provided, it defaults to false
         $token = $user->createToken('myapptoken', ['remember' => $remember])->plainTextToken;
         Auth::login($user, $remember);
-        
+
         // I add the value of "remember" to the response array
         $response = [
             'user' => $user,
@@ -83,8 +83,8 @@ class UserController extends Controller
             'message' => 'logged in',
             'remember' => $remember,
         ];
-        
+
         return response($response);
-        
+
     }
 }

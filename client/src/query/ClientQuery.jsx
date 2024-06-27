@@ -24,7 +24,7 @@ export const ClientQuery = () => {
 
   const registerUser = async (userData) => {
     try {
-      const response = await registerMutation.mutateAsync(userData);
+     return await registerMutation.mutateAsync(userData);
     } catch (error) {
     }
   };

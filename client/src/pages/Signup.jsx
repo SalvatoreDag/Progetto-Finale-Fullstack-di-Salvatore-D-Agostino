@@ -23,15 +23,15 @@ function Signup() {
   const navigate = useNavigate();
   const { data: isSuccess } = useQuery(["isSuccess"], null);
 
-  if (isSuccess) {
-   navigate("/auth/signin");
-    // navigate(`/auth/signin?email=${encodeURIComponent(data.email)}`);
-    queryClient.removeQueries(["isSuccess"]);
-  }
+   if (isSuccess) {
+     navigate("/auth/signin");
+     queryClient.removeQueries(["isSuccess"]);
+   }
 
   const onSubmit = async (data) => {
     //register function
     await registerUser(data);
+    queryClient.setQueryData(["signupData"], data);
   };
 
   const handleTogglePassword = (e) => {
@@ -46,8 +46,8 @@ function Signup() {
 
   return (
     <>
+      {isSubmitting ? <Loading /> : null}
       <div className="flex flex-col items-center min-h-screen pt-6 justify-start sm:pt-0 md:justify-center lg:-mt-20">
-        {isSubmitting ? <Loading /> : null}
         <div>
           <NavLink to="/">
             <h3 className="text-4xl font-bold text-indigo-800">SpendWise</h3>

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { ClientQuery } from "../query/ClientQuery";
@@ -16,26 +16,24 @@ function Signin() {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm();
-  const location = useLocation();
-  // const queryParams = new URLSearchParams(location.search);
-  // const preFilledEmail = queryParams.get('email') || '';
+
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  console.log(isSubmitting);
 
   const { loginUser } = ClientQuery();
   const queryClient = useQueryClient();
   const { data: isSuccess } = useQuery(["isSuccess"], null);
+  const { data: signupData } = useQuery(["signupData"], null);
   const [remember, setRemember] = useState(false);
+  const navigate = useNavigate();
+
+  const rememberToggle = () => {
+    setRemember(true);
+  };
 
   if (isSuccess) {
     navigate("/dashboard");
     queryClient.removeQueries(["isSuccess"], null);
   }
-
-  const rememberToggle = () => {
-    setRemember(true);
-  };
 
   const onSubmit = async (data) => {
     //login function
@@ -49,8 +47,8 @@ function Signin() {
 
   return (
     <>
+      {isSubmitting ? <Loading /> : null}
       <div className="flex flex-col items-center min-h-screen pt-6 justify-start md:justify-center sm:pt-0  lg:-mt-20">
-        {isSubmitting ? <Loading /> : (null)}
         <div>
           <NavLink to="/">
             <h3 className="text-4xl text-center font-bold text-indigo-800">
@@ -84,6 +82,7 @@ function Signin() {
                 name="email"
                 className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 {...register("email")}
+                defaultValue={signupData ? signupData.email : ""}
                 disabled={isSubmitting}
               />
             </div>
@@ -101,6 +100,7 @@ function Signin() {
                   name="password"
                   className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   {...register("password")}
+                  defaultValue={signupData ? signupData.password : ""}
                   disabled={isSubmitting}
                 />
                 <button

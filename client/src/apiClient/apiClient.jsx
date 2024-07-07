@@ -1,6 +1,6 @@
 import axios from "axios";
 
-////component that contains all the api
+//component that contains all the api
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -8,12 +8,12 @@ const api = axios.create({
 
 //call to get user data
 export const getUser = (data) => {
-  return api.get('/user', {
+  return api.get("/user", {
     headers: {
-      Authorization: `Bearer ${data.token}`
-    }
-  })
-}
+      Authorization: `Bearer ${data.token}`,
+    },
+  });
+};
 
 //call to login
 export const login = (credentials) => {
@@ -57,19 +57,18 @@ export const destroyExpenses = async (data) => {
 };
 
 //call to update an expense
-export const updateExpenses =  (data) => {
+export const updateExpenses = (data) => {
   const { id, accessToken, ...rest } = data;
 
-   return api.put(`/expenses/${id}`, rest, {
-     headers: {
-       Authorization: `Bearer ${accessToken}`,
-     },
-   });
+  return api.put(`/expenses/${id}`, rest, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 //call to create an expense
 export const storeExpenses = (data) => {
-
   const { accessToken, ...rest } = data;
 
   return api.post("/expenses", rest, {
